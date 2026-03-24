@@ -105,7 +105,7 @@ spring.jpa.properties.hibernate.format_sql=true
 
 # 👨‍💻 Autor
 - Lucas Vieira
-- Mateus 
+- Mateus Cipriano
 - Desenvolvido para fins de estudo em Spring Boot + Segurança com JWT + Arquitetura MVC.
 
 ---
