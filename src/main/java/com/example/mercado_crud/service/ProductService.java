@@ -1,5 +1,6 @@
 package com.example.mercado_crud.service;
 
+import com.example.mercado_crud.exceptions.RecursoNaoEncontradoException;
 import com.example.mercado_crud.model.Product;
 import com.example.mercado_crud.repository.ProductRepository;
 import lombok.RequiredArgsConstructor;
@@ -26,13 +27,13 @@ public class ProductService {
     //buscar
     public Product getProductByid(Long id){
         return productRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException("Produto com" + id +"Não encontrado"));
+                .orElseThrow(() -> new RecursoNaoEncontradoException("Produto com" + id +"Não encontrado"));
     }
     //deletar
     public void deleProduct(Long id){
 
         if(!productRepository.existsById(id)){
-            throw new RuntimeException("Produto com" + id +"Não encontrado");
+            throw new RecursoNaoEncontradoException("Produto com" + id +"Não encontrado");
         }
         productRepository.deleteById(id);
     }

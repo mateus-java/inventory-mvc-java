@@ -1,9 +1,11 @@
 package com.example.mercado_crud.controller;
 
 
+import com.example.mercado_crud.exceptions.RecursoNaoEncontradoException;
 import com.example.mercado_crud.model.Product;
 import com.example.mercado_crud.service.ProductService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -25,12 +27,19 @@ public class ProductController {
     }
 
     @GetMapping("/{id}")
-    public Product getProductByid(@PathVariable Long id){
-        return  productService.getProductByid(id);
+    public ResponseEntity<?> getProductByid(@PathVariable Long id){
+        try{
+            Product product = productService.getProductByid(id);
+            return ResponseEntity.ok(product);
+        } catch (RecursoNaoEncontradoException e){
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(e.getMessage());
+        }
+
     }
 
     @DeleteMapping("/{id}")
-    public void deleteProduct(@PathVariable Long id){
+    public ResponseEntity<Void> deleteProduct(@PathVariable Long id){
         productService.deleProduct(id);
+        return ResponseEntity.noContent().build();
     }
 }
