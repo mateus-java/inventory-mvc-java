@@ -1,9 +1,11 @@
 package com.example.mercado_crud.service;
 
+import com.example.mercado_crud.exceptions.ApiExeption;
 import com.example.mercado_crud.exceptions.RecursoNaoEncontradoException;
 import com.example.mercado_crud.model.Product;
 import com.example.mercado_crud.repository.ProductRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -27,13 +29,13 @@ public class ProductService {
     //buscar
     public Product getProductByid(Long id){
         return productRepository.findById(id)
-                .orElseThrow(() -> new RecursoNaoEncontradoException("Produto com" + id +"Não encontrado"));
+                .orElseThrow(() -> new ApiExeption("Produto com" + id +"Não encontrado", HttpStatus.NOT_FOUND));
     }
     //deletar
-    public void deleProduct(Long id){
+    public void deleteProduct(Long id){
 
         if(!productRepository.existsById(id)){
-            throw new RecursoNaoEncontradoException("Produto com" + id +"Não encontrado");
+            throw new ApiExeption("Produto com" + id +"Não encontrado", HttpStatus.NOT_FOUND);
         }
         productRepository.deleteById(id);
     }

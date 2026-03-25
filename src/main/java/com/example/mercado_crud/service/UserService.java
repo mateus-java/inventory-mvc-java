@@ -4,7 +4,9 @@ package com.example.mercado_crud.service;
 
 import java.util.List;
 
+import com.example.mercado_crud.exceptions.ApiExeption;
 import com.example.mercado_crud.exceptions.RecursoNaoEncontradoException;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 
 import com.example.mercado_crud.model.User;
@@ -35,12 +37,12 @@ public class UserService {
     }
     public User getUserByid(Long id){
         return userRepository.findById(id)
-                .orElseThrow(() -> new RecursoNaoEncontradoException("Usuario não encontrado"));
+                .orElseThrow(() -> new ApiExeption("Usuario não encontrado", HttpStatus.NOT_FOUND));
     }
 
     public void deleteUser(Long id){
         if(!userRepository.existsById(id)){
-            throw new RecursoNaoEncontradoException("Usuario com" + id +"Não encontrado");
+            throw new ApiExeption("Usuario com" + id +"Não encontrado", HttpStatus.NOT_FOUND);
         }
 
         userRepository.deleteById(id);

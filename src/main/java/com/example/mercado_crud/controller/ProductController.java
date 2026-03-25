@@ -27,19 +27,14 @@ public class ProductController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<?> getProductByid(@PathVariable Long id){
-        try{
-            Product product = productService.getProductByid(id);
-            return ResponseEntity.ok(product);
-        } catch (RecursoNaoEncontradoException e){
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(e.getMessage());
-        }
+    public Product getProductByid(@PathVariable Long id){
+    return  productService.getProductByid(id);
 
     }
 
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> deleteProduct(@PathVariable Long id){
-        productService.deleProduct(id);
+        productService.deleteProduct(id);
         return ResponseEntity.noContent().build();
     }
 }
